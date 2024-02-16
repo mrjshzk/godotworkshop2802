@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://l4dtb1y6x3os"]
+
+[ext_resource type="Script" path="res://zombie_wave_manager.gd" id="1_h2s6m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wyhu6"]
+bg_color = Color(0.180392, 0.180392, 0.180392, 0.32549)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+expand_margin_left = 50.0
+expand_margin_top = 10.0
+expand_margin_right = 50.0
+expand_margin_bottom = 10.0
+
+[node name="ZombieWaveManager" type="Node2D"]
+script = ExtResource("1_h2s6m")
+
+[node name="WaveUI" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="WaveUI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_top = 19.0
+offset_right = 64.0
+offset_bottom = 81.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wyhu6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WaveUI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+metadata/_edit_lock_ = true
+
+[node name="CurrentWave" type="Label" parent="WaveUI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Current Wave: 1"
+metadata/_edit_lock_ = true
+
+[node name="HSeparator" type="HSeparator" parent="WaveUI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="ZombiesLeft" type="Label" parent="WaveUI/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Zombies Left: 1"
+metadata/_edit_lock_ = true

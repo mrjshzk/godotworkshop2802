@@ -1,0 +1,132 @@
+[gd_scene load_steps=8 format=3 uid="uid://ct0fitwnjp0na"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_jhcro"]
+[ext_resource type="Texture2D" uid="uid://c8ga355pt4l10" path="res://Assets/Ground.png" id="1_r8pix"]
+[ext_resource type="PackedScene" uid="uid://blq635arsrasx" path="res://player.tscn" id="2_jdb1p"]
+[ext_resource type="PackedScene" uid="uid://l4dtb1y6x3os" path="res://zombie_wave_manager.tscn" id="3_tre7l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gps3u"]
+size = Vector2(20, 928)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cv126"]
+size = Vector2(9.99635, 1624)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u1t47"]
+bg_color = Color(0.129412, 0.129412, 0.129412, 0.227451)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.188235, 0.262745, 0.184314, 0.627451)
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_jhcro")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(568, 328)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(568, 320)
+scale = Vector2(0.93125, 0.944444)
+texture = ExtResource("1_r8pix")
+
+[node name="WorldBounds" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBounds"]
+position = Vector2(16, 296)
+shape = SubResource("RectangleShape2D_gps3u")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="WorldBounds"]
+position = Vector2(1136, 256)
+shape = SubResource("RectangleShape2D_gps3u")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="WorldBounds"]
+position = Vector2(552, 632)
+rotation = -1.5708
+shape = SubResource("RectangleShape2D_cv126")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="WorldBounds"]
+position = Vector2(648, 16)
+rotation = -1.5708
+shape = SubResource("RectangleShape2D_cv126")
+
+[node name="Player" parent="." instance=ExtResource("2_jdb1p")]
+position = Vector2(544, 312)
+scale = Vector2(0.5, 0.5)
+
+[node name="ZombieWaveManager" parent="." node_paths=PackedStringArray("spawn_points") instance=ExtResource("3_tre7l")]
+position = Vector2(352, -128)
+spawn_points = [NodePath("Marker2D"), NodePath("Marker2D2"), NodePath("Marker2D3"), NodePath("Marker2D4"), NodePath("Marker2D5"), NodePath("Marker2D6")]
+spawn_multiplier = 2.0
+
+[node name="Marker2D" type="Marker2D" parent="ZombieWaveManager"]
+position = Vector2(1000, -32)
+
+[node name="Marker2D2" type="Marker2D" parent="ZombieWaveManager"]
+position = Vector2(-608, 1016)
+
+[node name="Marker2D3" type="Marker2D" parent="ZombieWaveManager"]
+position = Vector2(-632, -72)
+
+[node name="Marker2D4" type="Marker2D" parent="ZombieWaveManager"]
+position = Vector2(1000, 1000)
+
+[node name="Marker2D5" type="Marker2D" parent="ZombieWaveManager"]
+position = Vector2(1000, 520)
+
+[node name="Marker2D6" type="Marker2D" parent="ZombieWaveManager"]
+position = Vector2(-680, 504)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 2
+visible = false
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -133.0
+offset_top = -65.5
+offset_right = 133.0
+offset_bottom = 65.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_u1t47")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "You lost!"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Quit" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Quit Game"
+
+[node name="Retry" type="Button" parent="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Retry"
+
+[connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/Retry" to="." method="_on_retry_pressed"]

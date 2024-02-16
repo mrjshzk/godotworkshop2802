@@ -1,0 +1,134 @@
+[gd_scene load_steps=12 format=3 uid="uid://bxccjfdmatkg5"]
+
+[ext_resource type="Script" path="res://zombie.gd" id="1_bqyie"]
+[ext_resource type="Texture2D" uid="uid://cb572fpmgv4i6" path="res://Assets/Zombie/Zombie1_Arms.png" id="1_e4yoo"]
+[ext_resource type="Texture2D" uid="uid://74f1p2tjooee" path="res://Assets/Zombie/Zombie1_Head.png" id="2_xj4pi"]
+[ext_resource type="Texture2D" uid="uid://rpiky6eiqbt5" path="res://Assets/blood_splatter.png" id="4_rw53k"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5pfjl"]
+radius = 40.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jg8jb"]
+size = Vector2(72, 104)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t4is7"]
+radius = 48.0
+height = 128.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ntrtq"]
+radius = 15.9781
+height = 128.0
+
+[sub_resource type="Animation" id="Animation_qkxgq"]
+resource_name = "Hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Blood:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Blood:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.28),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 15]
+}
+
+[sub_resource type="Animation" id="Animation_5bvnk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Blood:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_alrne"]
+_data = {
+"Hit": SubResource("Animation_qkxgq"),
+"RESET": SubResource("Animation_5bvnk")
+}
+
+[node name="Zombie" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_bqyie")
+speed = 8000.0
+knockback_strength = 60
+
+[node name="Body" type="Sprite2D" parent="."]
+texture = ExtResource("1_e4yoo")
+
+[node name="Head" type="Sprite2D" parent="."]
+texture = ExtResource("2_xj4pi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5pfjl")
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(52, -4)
+shape = SubResource("RectangleShape2D_jg8jb")
+debug_color = Color(0.988235, 0, 0.298039, 0.419608)
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CapsuleShape2D_t4is7")
+debug_color = Color(0, 0.647059, 0.258824, 0.419608)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(48, -48)
+rotation = 1.696
+shape = SubResource("CapsuleShape2D_ntrtq")
+debug_color = Color(0, 0.647059, 0.258824, 0.419608)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(48, 40)
+rotation = 1.39506
+shape = SubResource("CapsuleShape2D_ntrtq")
+debug_color = Color(0, 0.647059, 0.258824, 0.419608)
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Blood" type="Sprite2D" parent="."]
+self_modulate = Color(0.466667, 0, 0, 1)
+position = Vector2(0, 24)
+texture = ExtResource("4_rw53k")
+hframes = 4
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_alrne")
+}
+
+[node name="KnockbackHelper" type="Marker2D" parent="."]
+position = Vector2(128, 0)
+
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

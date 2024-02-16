@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://cikixfmvd10wb"]
+
+[ext_resource type="Texture2D" uid="uid://bwhyes3gw2yyo" path="res://Assets/Player/BulletTrail.png" id="1_dqt04"]
+[ext_resource type="Script" path="res://bullet.gd" id="1_t7j7t"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iiu1k"]
+
+[node name="Bullet" type="RigidBody2D"]
+top_level = true
+collision_layer = 2
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_t7j7t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_iiu1k")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.0627451, 0.0627451, 0.0627451, 1)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_dqt04")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.968627, 0.478431, 0, 1)
+energy = 10.28
+texture = ExtResource("1_dqt04")
+offset = Vector2(-8.42, 0)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
