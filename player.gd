@@ -37,7 +37,8 @@ func take_damage():
 	health -= 1
 	print("Current health: %d" % health)
 	%ProgressBar.value = health
+	health_changed.emit(health)
 	if health == 0:
 		player_died.emit()
 		return
-	health_changed.emit(health)
+	

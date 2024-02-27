@@ -36,7 +36,7 @@ metadata/_edit_lock_ = true
 
 [node name="CurrentWave" type="Label" parent="WaveUI/PanelContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 20
 text = "Current Wave: 1"
 metadata/_edit_lock_ = true
 
@@ -46,6 +46,6 @@ metadata/_edit_lock_ = true
 
 [node name="ZombiesLeft" type="Label" parent="WaveUI/PanelContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 20
 text = "Zombies Left: 1"
 metadata/_edit_lock_ = true

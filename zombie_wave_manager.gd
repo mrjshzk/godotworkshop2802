@@ -20,16 +20,18 @@ func _ready():
 func start_new_wave():
 	zombies_left = zombies_to_spawn
 	var number_of_loops := zombies_to_spawn / spawn_points.size()
+	
 	var overload_loops := (zombies_to_spawn - (number_of_loops * spawn_points.size()))
 
 	for j in range(0, number_of_loops):
+		print("here")
 		for i in spawn_points:
 			spawn_zombie(i.global_position)
-			await get_tree().create_timer(0.2).timeout
+			await get_tree().create_timer(0.1).timeout
 	
 	for i in range(0, overload_loops):
-		spawn_zombie(spawn_points[i].global_position)
-		await get_tree().create_timer(0.2).timeout
+		spawn_zombie(spawn_points[randi_range(0, spawn_points.size()-1)].global_position)
+		await get_tree().create_timer(0.1).timeout
 
 
 func spawn_zombie(spawn_point : Vector2):

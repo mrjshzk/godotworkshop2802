@@ -29,11 +29,6 @@ script = ExtResource("1_jhcro")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(568, 328)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(568, 320)
-scale = Vector2(0.93125, 0.944444)
-texture = ExtResource("1_r8pix")
-
 [node name="WorldBounds" type="StaticBody2D" parent="."]
 collision_layer = 4
 collision_mask = 0
@@ -52,7 +47,7 @@ rotation = -1.5708
 shape = SubResource("RectangleShape2D_cv126")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="WorldBounds"]
-position = Vector2(648, 16)
+position = Vector2(648, 0)
 rotation = -1.5708
 shape = SubResource("RectangleShape2D_cv126")
 
@@ -62,7 +57,7 @@ scale = Vector2(0.5, 0.5)
 
 [node name="ZombieWaveManager" parent="." node_paths=PackedStringArray("spawn_points") instance=ExtResource("3_tre7l")]
 position = Vector2(352, -128)
-spawn_points = [NodePath("Marker2D"), NodePath("Marker2D2"), NodePath("Marker2D3"), NodePath("Marker2D4"), NodePath("Marker2D5"), NodePath("Marker2D6")]
+spawn_points = [NodePath("Marker2D"), NodePath("Marker2D2"), NodePath("Marker2D3"), NodePath("Marker2D4"), NodePath("Marker2D5"), NodePath("Marker2D6"), NodePath("Marker2D7"), NodePath("Marker2D8"), NodePath("Marker2D9"), NodePath("Marker2D10")]
 spawn_multiplier = 2.0
 
 [node name="Marker2D" type="Marker2D" parent="ZombieWaveManager"]
@@ -82,6 +77,18 @@ position = Vector2(1000, 520)
 
 [node name="Marker2D6" type="Marker2D" parent="ZombieWaveManager"]
 position = Vector2(-680, 504)
+
+[node name="Marker2D7" type="Marker2D" parent="ZombieWaveManager"]
+position = Vector2(-688, 200)
+
+[node name="Marker2D8" type="Marker2D" parent="ZombieWaveManager"]
+position = Vector2(-736, 760)
+
+[node name="Marker2D9" type="Marker2D" parent="ZombieWaveManager"]
+position = Vector2(1128, 760)
+
+[node name="Marker2D10" type="Marker2D" parent="ZombieWaveManager"]
+position = Vector2(1088, 232)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_mode = 2
@@ -126,6 +133,18 @@ text = "Quit Game"
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Retry"
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer2"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_r8pix")
+expand_mode = 5
 
 [connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
 [connection signal="pressed" from="CanvasLayer/PanelContainer/VBoxContainer/HBoxContainer/Quit" to="." method="_on_quit_pressed"]
